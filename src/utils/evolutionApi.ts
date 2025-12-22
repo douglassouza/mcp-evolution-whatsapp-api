@@ -542,6 +542,40 @@ export class EvolutionApi {
   }
 
   /**
+   * Find messages for a specific contact
+   * @param instanceName Name of the Evolution API instance
+   * @param remoteJid WhatsApp contact ID (e.g., 5511999999999@s.whatsapp.net)
+   * @returns List of messages for the specified contact
+   */
+  public async findMessages(
+    instanceName: string,
+    remoteJid: string
+  ): Promise<FindMessagesResponse> {
+    try {
+      const response = await this.axiosInstance.post(
+        `/chat/findMessages/${instanceName}`,
+        {
+          where: {
+            key: {
+              remoteJid
+            }
+          }
+        }
+      );
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw new Error(
+          `Error finding messages: ${
+            error.response?.data?.message || error.message
+          }`
+        );
+      }
+      throw error;
+    }
+  }
+
+  /**
    * Send a poll message to a WhatsApp number
    * @param instanceName Name of the Evolution API instance
    * @param params Poll parameters including number, name, selectableCount, and values
@@ -1429,6 +1463,22 @@ export interface FindContactsResponse {
     isGroup: boolean;
     isWAContact: boolean;
     isMyContact: boolean;
+  }[];
+}
+
+export interface FindMessagesResponse {
+  messages: {
+    key: {
+      remoteJid: string;
+      fromMe: boolean;
+      id: string;
+    };
+    pushName?: string;
+    message?: any;
+    messageType?: string;
+    messageTimestamp?: number;
+    status?: string;
+    participant?: string;
   }[];
 }
 
