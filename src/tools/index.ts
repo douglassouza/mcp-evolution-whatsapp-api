@@ -29,6 +29,7 @@ import { findGroupByJidTool } from "./findGroupByJid/index.js";
 import { findGroupMembersTool } from "./findGroupMembers/index.js";
 import { findChatsTool } from "./findChats/index.js";
 import { findContactsTool } from "./findContacts/index.js";
+import { findMessagesTool } from "./findMessages/index.js";
 
 // biome-ignore lint/suspicious/noExplicitAny: Any is fine here because all tools validate their input schemas.
 export const createTools = (): ToolRegistration<any>[] => {
@@ -182,6 +183,11 @@ export const createTools = (): ToolRegistration<any>[] => {
 			...findContactsTool,
 			// biome-ignore lint/suspicious/noExplicitAny: All tools validate their input schemas, so any is fine.
 			handler: (args: any) => findContactsTool.handler(args),
+		},
+		{
+			...findMessagesTool,
+			// biome-ignore lint/suspicious/noExplicitAny: All tools validate their input schemas, so any is fine.
+			handler: (args: any) => findMessagesTool.handler(args),
 		},
 	];
 };
