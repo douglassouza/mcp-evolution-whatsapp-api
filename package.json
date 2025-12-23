@@ -21,7 +21,7 @@
     "dist"
   ],
   "scripts": {
-  "build": "npx esbuild src/main.ts --bundle --platform=node --outfile=dist/main.js --target=node18 --format=esm && chmod +x dist/main.js",
+  "build": "npx esbuild src/main.ts --bundle --platform=node --outfile=dist/main.js --target=node18 --format=esm",
   "start": "node dist/main.js",
   "dev": "node --loader ts-node/esm src/main.ts",
   "test": "npx bun:test || echo \"No bun test runner configured\"",
